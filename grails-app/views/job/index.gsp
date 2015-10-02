@@ -39,6 +39,7 @@
                     <th>Status</th>
                     <th>Percentage Complete</th>
                     <th>Finished Date</th>
+                    <th>Reuslts</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -57,7 +58,11 @@
                         <td name="status">${fieldValue(bean: jobInstance, field: "status")}</td>
                         <td name="percent_completed">${fieldValue(bean: jobInstance, field: "percent_completed")}</td>
                         <td name="finished">${fieldValue(bean: jobInstance, field: "finished")}</td>
-
+                        <td>  <g:link id="${jobInstance.id}"
+                                      class="${jobInstance.percent_completed ==100 ? 'btn btn-default btn-success' :
+                                              'btn btn-default btn-success disabled' } "
+                                      controller="job"
+                                      action="results">Download CSV Results</g:link></td>
                     </tr>
                 </g:each>
                 </tbody>

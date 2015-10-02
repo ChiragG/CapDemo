@@ -1,5 +1,6 @@
 package capdemo
 
+import com.captricity.api.CaptricityClient
 import org.joda.time.DateTime
 import org.json.JSONObject
 
@@ -14,10 +15,12 @@ class Job {
     int percent_completed
     int instance_set_count
 
+    static private  CaptricityClient _client
+
     static constraints = {
     }
 
-    def Job(JSONObject obj){
+    def Job(JSONObject obj, CaptricityClient client){
         id= obj.getInt('id')
         name = obj.getString('name')
         status =  obj.getString('status')
@@ -26,5 +29,11 @@ class Job {
         modified =DateTime.parse(obj.getString('modified'))
         percent_completed =  obj.getInt('percent_completed')
         instance_set_count =  obj.getInt('instance_set_count')
+        _client =client
     }
+
+    def getResults(){
+        def results = _client.getJobResults(id)
+    }
+
 }
