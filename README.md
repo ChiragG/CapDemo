@@ -4,7 +4,7 @@ CapDemo
 
 ## Description
 
-Sample Web Api Using Captricity API : https://shreddr.captricity.com/developer/api-reference/
+Sample Web App Using Captricity API : https://shreddr.captricity.com/developer/api-reference/
 
 ## Features
 1. Upload images to an account and manage these images in Captricity batches.
