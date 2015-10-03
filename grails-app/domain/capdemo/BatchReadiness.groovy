@@ -15,7 +15,7 @@ class BatchReadiness {
 
     def BatchReadiness(JSONObject obj) {
         has_empty_documents = obj.getBoolean('has_empty_documents')
-        valid_page_count =  obj.getBoolean('has_empty_documents')
+        valid_page_count =  obj.getBoolean('valid_page_count')
         has_documents = obj.getBoolean('has_documents')
         errors = []
         warnings = []
@@ -23,9 +23,17 @@ class BatchReadiness {
         for (int i=0 ; i< jWarn.length(); i++){
             warnings << jWarn.getString(i)
         }
-        def jError = obj.getJSONArray('warnings')
+        def jError = obj.getJSONArray('errors')
         for (int i=0 ; i< jError.length(); i++) {
             errors << jError.getString(i)
         }
+    }
+
+    def Boolean hasErrors() {
+        if(errors != null){
+            return  errors.size() > 0
+        }
+
+        return true
     }
 }

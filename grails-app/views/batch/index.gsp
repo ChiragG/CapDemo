@@ -46,7 +46,7 @@
                 <br/>
                 <label>Upload File:</label>
                 <span class="btn btn-default btn-file">
-                    Browse <input type="file" name="upload_file">
+                    Browse <input type="file" name="save_file">
                 </span>
                 <span class="help-block">Add A File To The Batch.</span>
 
@@ -54,8 +54,8 @@
 
             <br/>
             <g:actionSubmit id="${batchInstance.id}" class="btn btn-group-sm btn-primary" controller="batch"
-                            action="save"
-                            value="Save Batch"/>
+                            action="Create"
+                            value="Create Batch"/>
         </g:form>
     </div>
 

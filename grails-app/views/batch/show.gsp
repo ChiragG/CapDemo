@@ -106,6 +106,59 @@
         </section>
         <section>
             <div class="row col-md-12">
+                <h3 class="Sub-header">Batch Files</h3>
+                <g:form action="deleteFiles" controller="batch" method="post">
+                    <div class="col-md-6 ">
+                        <div class="list-group" id="list1">
+                            <input type="hidden" name="id" value="${batchInstance.id}"/>
+                            <g:if test="${batchInstance.files.size() > 0}">
+                                <g:each in="${batchInstance.files}" var="file">
+                                    <a href="#" class="list-group-item">${file.name}<input type="checkbox"
+                                                                                           class="pull-right"
+                                                                                           id="${file.id}"
+                                                                                           name="delete_files"
+                                                                                           value="${file.id}"></a>
+                                </g:each>
+                            </g:if>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 ">
+                        <fieldset>
+                            <div class="row">
+                                <g:submitButton name="deleteFile" class="btn btn-default btn-danger" id="deleteFileBtn"
+                                                value="Delete File"/>
+                            </div>
+
+                        </fieldset>
+                    </div>
+                </g:form>
+            </div>
+            <div class="row col-md-12">
+                <g:form action="addBatchFile" controller="batch"
+                        enctype="multipart/form-data"
+                        autocomplete="off">
+                    <input type="hidden" name="id" value="${batchInstance.id}"/>
+
+                    <div class="form-group form-horizontal">
+                        <label>Upload File:</label>
+                        <span class="btn btn-default btn-file">
+                            Browse <input type="file" name="save_file">
+                        </span>
+                        <span class="help-block">Browse Files.</span>
+
+                    </div>
+
+                    <br/>
+                    <g:actionSubmit id="addFiles_Btn" class="btn btn-group-sm btn-primary" controller="batch"
+                                    action="addBatchFile"
+                                    value="Add File"/>
+                </g:form>
+            </div>
+
+        </section>
+        <section>
+            <div class="row col-md-12">
                 <h3 class="Sub-header">Batch Readiness</h3>
 
                 <div class="row col-md-4">
@@ -174,7 +227,7 @@
                         </div>
 
                         <div class="panel-body">
-                            <div >
+                            <div>
                                 <g:if test="${batchInstance.readiness.errors.size() == 0}">
                                     <span class="from-label ">
                                         <B>No Errors!</B>
@@ -191,7 +244,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
         <section>
@@ -199,15 +251,22 @@
                 <h3 class="Sub-header">Batch Actions</h3>
                 <fieldset>
                     <g:link id="${batchInstance.id}"
-                            class="${batchInstance.status == 'setup' ? 'btn btn-default btn-success' :
+                            class="${!batchInstance.disableStart() ?
+                                    'btn btn-default btn-success' :
                                     'btn btn-default btn-success disabled'}"
                             controller="batch"
                             action="start">Start Batch</g:link>
                     <g:link id="${batchInstance.id}"
-                            class="${batchInstance.status == 'setup' ? 'btn btn-default btn-warning' :
+                            class="${batchInstance.status == 'processed' ?
+                                    'btn btn-default btn-warning' :
                                     'btn btn-default btn-warning disabled'}"
                             controller="batch"
                             action="start">Show Job</g:link>
+                    <g:link id="${batchInstance.id}"
+                            class="btn btn-default btn-danger"
+                            controller="batch"
+                            action="addBatchToDocument">Add Batch To Default Document</g:link>
+
                 </fieldset>
             </div>
         </section>

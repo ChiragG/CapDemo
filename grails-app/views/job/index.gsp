@@ -9,12 +9,12 @@
 
 <body role="document">
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top" aria-expanded="true" aria-controls="navbar">
     <div class="container">
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><g:link class="homeButton" action="index"  controller="batch">Batches</g:link></li>
-                <li><g:link class="homeButton" action="index" controller="job">Jobs</g:link></li>
+                <li><g:link class="homeButton" action="index"  controller="batch">Batches</g:link></li>
+                <li class=" active"><g:link  action="index" controller="job">Jobs</g:link></li>
                 <li><g:link class="homeButton" action="index" controller="result">Results</g:link></li>
             </ul>
         </div>
