@@ -15,25 +15,37 @@ class Job {
     int percent_completed
     int instance_set_count
 
-    static private  CaptricityClient _client
+    static private  CaptricityClient client
 
     static constraints = {
     }
 
-    def Job(JSONObject obj, CaptricityClient client){
+    def Job(JSONObject obj, CaptricityClient capClient){
         id= obj.getInt('id')
         name = obj.getString('name')
         status =  obj.getString('status')
-        finished = DateTime.parse(obj.getString('finished'))
-        started = DateTime.parse(obj.getString('started'))
-        modified =DateTime.parse(obj.getString('modified'))
+        if(obj.isNull('finished')){
+            finished = null
+        }else{
+            finished = DateTime.parse(obj.getString('finished'))
+        }
+        if(obj.isNull('started')){
+            started = null
+        } else{
+            started = DateTime.parse(obj.getString('started'))
+        }
+        if(obj.isNull('modified')){
+            modified =  null
+        }else{
+            modified =DateTime.parse(obj.getString('modified'))
+        }
         percent_completed =  obj.getInt('percent_completed')
         instance_set_count =  obj.getInt('instance_set_count')
-        _client =client
+        client = capClient
     }
 
     def getResults(){
-        def results = _client.getJobResults(id)
+        def results = client.getJobResults(id)
     }
 
 }
