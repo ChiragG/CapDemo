@@ -22,26 +22,27 @@ class Batch {
     }
 
     def Batch(JSONObject obj, capClient){
-        name = obj.getString('name')
-        id =  obj.getInt('id')
-        status = obj.getString('status')
-        if(obj.isNull('last_upload_date')){
-            last_upload_date = null
-        }else{
-            last_upload_date = DateTime.parse(obj.getString('last_upload_date'))
+        if(obj != null && capClient != null ){
+            name = obj.getString('name')
+            id =  obj.getInt('id')
+            status = obj.getString('status')
+            if(obj.isNull('last_upload_date')){
+                last_upload_date = null
+            }else{
+                last_upload_date = DateTime.parse(obj.getString('last_upload_date'))
+            }
+            file_count = obj.getInt('file_count')
+            client= capClient
+            files = []
+            def filesJson = client.getBatchFiles(id)
+            for(int i=0; i< filesJson.length() ; i++){
+                def fileToBeAdded = new File()
+                fileToBeAdded.name = filesJson.getJSONObject(i).getString('file_name')
+                fileToBeAdded.id = filesJson.getJSONObject(i).getInt('id')
+                files << fileToBeAdded
+            }
         }
-        file_count = obj.getInt('file_count')
-        client= capClient
-        files = []
-        def filesJson = client.getBatchFiles(id)
-        for(int i=0; i< filesJson.length() ; i++){
-            def fileToBeAdded = new File()
-            fileToBeAdded.name = filesJson.getJSONObject(i).getString('file_name')
-            fileToBeAdded.id = filesJson.getJSONObject(i).getInt('id')
-            files << fileToBeAdded
-        }
-//        cost = new Cost()
-//        files= []
+
     }
 
     def assignDefaultDocumet(){
@@ -63,6 +64,18 @@ class Batch {
             return (readiness.hasErrors() || status != "setup")
         }
         return true
+    }
+
+    def setupDeep(){
+        price = client.getBatchCost(id)
+        readiness = new BatchReadiness(client.getBatchReadiness(id))
+    }
+
+    def delete(){
+        def results = client.deleteBatch(id)
+    }
+    def JSONObject start() {
+        def results = client.submitBatch(id)
     }
 
 }
