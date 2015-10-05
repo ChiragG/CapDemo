@@ -20,7 +20,7 @@
 
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><g:link class="homeButton" action="index">Batches</g:link></li>
+                    <li><g:link class="homeButton" controller="batch" action="index">Batches</g:link></li>
                     <li><g:link action="index" controller="job">Jobs</g:link></li>
                 </ul>
             </div>
@@ -31,85 +31,101 @@
 
 <div class="container theme-showcase" role="main">
     <div class="row col-md-12">
-        <h1 class="page-header">Job Details</h1>
+        <h1 class="page-header">Result Analysis</h1>
         <section>
-            <div class="row col-md-12">
-                <span class="from-label col-md-3">
-                    <B>Percentage Complete :</B>
-                </span>
-                <span class="col-md-9">
-                    <div class="progress ">
-                        <div class="${jobInstance.percent_completed == 100 ? ' progress-bar progress-bar-success' :
-                                'progress-bar progress-bar-info'} "
-                             role="progressbar"
-                             aria-valuenow="${jobInstance.percent_completed}"
-                             aria-valuemin="0" aria-valuemax="100" style="width:${jobInstance.percent_completed}%">
-                            ${jobInstance.percent_completed}% Complete
-                        </div>
+            <g:if test="${jobInstance.status == 'completed'}">
+                <div class="row col-md-12">
+                    <h3 class="Sub-header">Job Results Charts</h3>
+                    <div class="row col-md-12 ">
+                        <h4> Data Set Of Hours a Student Spent Outside School</h4>
+                        <table class="table table-striped table-bordered table-condensed">
+                            <thead>
+                            <tr>
+                                <td>
+                                    Facebook Game Hours
+                                </td>
+                                <td>
+                                    Sport Hours
+                                </td>
+                                <td>
+                                    HomeWork Hours
+                                </td>
+                                <td>
+                                    Phone Hours
+                                </td>
+                                <td>
+                                    Friends Hours
+                                </td>
+                                <td>
+                                    TV Hours
+                                </td>
+                                <td>
+                                    Other Hours
+                                </td>
+                            </tr>
+
+                            </thead>
+                            <tbody>
+                            <g:each in="${jobInstance.jobResults}" var="result">
+                                <tr>
+                                    <td>
+                                        ${result.Facebook_Game_Hours}
+                                    </td>
+                                    <td>${result.Sport_Hours}</td>
+                                    <td>${result.HomeWork_Hours}</td>
+                                    <td>${result.Phone_Hours}</td>
+                                    <td>${result.Friends_Hours}</td>
+                                    <td>${result.TV_Hours}</td>
+                                    <td>${result.Other_Hours}</td>
+
+                                </tr>
+
+                            </g:each>
+                            </tbody>
+                        </table>
                     </div>
 
-                </span>
-            </div>
+                    <%
+                        def myDailyActivitiesColumns = [['string', 'How out of School Hours Are Spent'], ['number',
+                                                                                                          'Hours per Day']]
+                    %>
+                    <gvisualization:pieCoreChart elementId="piechart" title="How out of School Hours Are Spent"
+                                                 width="${900}"
+                                                 height="${300}"
+                                                 columns="${myDailyActivitiesColumns}" data="${jobInstance.pieData}"/>
+                    <div id="piechart" class="col-md-12 "></div>
 
-            <div class="row col-md-12">
-                <%
-                    def myDailyActivitiesColumns = [['string', 'How out of School Hours Are Spent'], ['number',
-                                                                                              'Hours per Day']]
-                %>
 
-                <gvisualization:pieCoreChart elementId="piechart" title="How out of School Hours Are Spent" width="${900}"
-                                             height="${300}"
-                                             columns="${myDailyActivitiesColumns}" data="${jobInstance.pieData}"/>
-                <div id="piechart" class="col-md-12 "></div>
-            </div>
+                </div>
 
-            <div class="row col-md-12">
-                <table class="table table-striped table-bordered table-condensed">
-                    <thead>
-                    <tr>
-                        <td>
-                            Facebook_Game_Hours
-                        </td>
-                    <td>
-                        Sport_Hours
-                    </td>
-                    <td>
-                        HomeWork_Hours
-                    </td>
-                    <td>
-                        Phone_Hours
-                    </td>
-                    <td>
-                        Friends_Hours
-                    </td>
-                    <td>
-                        TV_Hours
-                    </td>
-                    <td>
-                        Other_Hours
-                    </td>
-                    </tr>
+                <div class="row col-md-12">
+                </div>
+            </g:if>
+            <g:else>
+                <div class="jumbotron alert-success">
+                    <Span class="center-block">
+                        Please Wait For Job To Complete Processing To See Result Analytics For This Batch.
+                    </Span>
+                    <div class="progress ">
+                    <div class= "${jobInstance.percent_completed == 100 ? ' progress-bar progress-bar-success' :
+                            'progress-bar progress-bar-info' } "
+                         role="progressbar"
+                         aria-valuenow="${jobInstance.percent_completed}"
+                         aria-valuemin="0" aria-valuemax="100" style="width:${jobInstance.percent_completed}%">
+                        ${jobInstance.percent_completed}% Complete
+                    </div>
 
-                    </thead>
-                    <tbody>
-                    <g:each in="${jobInstance.jobResults}" var="result">
-                        <tr>
-                            <td>
-                                ${result.Facebook_Game_Hours}
-                            </td>
-                            <td>${result.Sport_Hours}</td>
-                            <td>${result.HomeWork_Hours}</td>
-                            <td>${result.Phone_Hours}</td>
-                            <td>${result.Friends_Hours}</td>
-                            <td>${result.TV_Hours}</td>
-                            <td>${result.Other_Hours}</td>
+                </div>
+                    <div>
+                        <g:link action="show" id="${jobInstance.id}" class="btn btn-info btn-lg ">
+                            <span>Refresh </span> <span class="glyphicon glyphicon-refresh"> </span>
+                        </g:link>
+                        <span>Job Status: ${jobInstance.status.toUpperCase()} </span>
+                    </div>
 
-                        </tr>
+                </div>
+            </g:else>
 
-                    </g:each>
-                    </tbody>
-                </table>
-            </div>
         </section>
     </div>
 </div>

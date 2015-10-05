@@ -29,7 +29,7 @@
 
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><g:link class="homeButton" action="index">Batches</g:link></li>
+                    <li><g:link class="homeButton" controller="batch" action="index">Batches</g:link></li>
                     <li><g:link action="index" controller="job">Jobs</g:link></li>
                 </ul>
             </div>

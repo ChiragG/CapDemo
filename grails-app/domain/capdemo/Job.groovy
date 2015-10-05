@@ -79,9 +79,9 @@ class Job {
             map.each {key,value->
                 if(key.contains("Hours")){
                     if(mapOfVals.containsKey(key)){
-                        mapOfVals[key] = mapOfVals[key]+ Integer.parseInt(value)
+                        mapOfVals[key] = mapOfVals[key]+ Double.parseDouble(value)
                     }else{
-                        mapOfVals[key] =  Integer.parseInt(value)
+                        mapOfVals[key] =  Double.parseDouble(value)
                     }
 
                 }
