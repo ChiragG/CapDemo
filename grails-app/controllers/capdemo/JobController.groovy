@@ -17,21 +17,25 @@ class JobController {
         def r = client.showJobs()
         for(int i=0; i < r.length(); i++){
             def obj = r.getJSONObject(i)
-            jobList << new Job(obj,client)
+            if(!obj.getBoolean('is_example')){
+                jobList << new Job(obj,client)
+            }
         }
         return[jobList: jobList]
     }
 
-    def show(Job jobInstance) {
-        respond jobInstance
+    def show() {
+        withJob {jobInstance ->
+            jobInstance.populateResults()
+            respond jobInstance
+        }
     }
 
     def results(){
         withJob {jobInstance ->
-            def text = jobInstance.getResults()
-            Date now = new Date()
+            jobInstance.CSVResults()
             response.setHeader "Content-Disposition", "inline; filename=results.csv"
-            render contentType: "application/octet-stream", text: text
+            render contentType: "application/octet-stream", text: jobInstance.resultsText
         }
     }
 
