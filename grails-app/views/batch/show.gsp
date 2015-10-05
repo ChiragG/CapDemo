@@ -53,7 +53,7 @@
                                     'btn btn-default btn-success disabled'}"
                             controller="batch"
                             action="start">Start Batch</g:link>
-                    <g:link id="${batchInstance.id}"
+                    <g:link id="${batchInstance.jobId}"
                             class="${batchInstance.status == 'processed' ?
                                     'btn btn-default btn-warning' :
                                     'btn btn-default btn-warning disabled'}"
@@ -161,38 +161,40 @@
             </div>
         </section>
         <section>
-            <div class="row col-md-12">
-                <h3 class="Sub-header">Batch Cost Details</h3>
+            <g:if test="${batchInstance.price.length()  > 0 }">
+                <div class="row col-md-12">
+                    <h3 class="Sub-header">Batch Cost Details</h3>
 
-                <div class="row col-md-4 ">
-                    <span class="from-label ">
-                        <B>User Subscription Fields Left:</B>
-                    </span>
-                    <span class="badge">
-                        ${batchInstance.price.user_subscription_fields}
-                    </span>
+                    <div class="row col-md-4 ">
+                        <span class="from-label ">
+                            <B>User Subscription Fields Left:</B>
+                        </span>
+                        <span class="badge">
+                            ${batchInstance.price.user_subscription_fields}
+                        </span>
+                    </div>
+
+                    <div class="row col-md-4 ">
+                        <span class="from-label ">
+                            <B>Page Count:</B>
+                        </span>
+                        <span class="badge">
+                            ${batchInstance.price.page_count}
+                        </span>
+                    </div>
+
+
+                    <div class="row col-md-4 ">
+                        <span class="from-label ">
+                            <B>The included fields in each page:</B>
+                        </span>
+                        <span class="badge">
+                            ${batchInstance.price.user_included_fields_per_page}
+                        </span>
+                    </div>
+
                 </div>
-
-                <div class="row col-md-4 ">
-                    <span class="from-label ">
-                        <B>Page Count:</B>
-                    </span>
-                    <span class="badge">
-                        ${batchInstance.price.page_count}
-                    </span>
-                </div>
-
-
-                <div class="row col-md-4 ">
-                    <span class="from-label ">
-                        <B>The included fields in each page:</B>
-                    </span>
-                    <span class="badge">
-                        ${batchInstance.price.user_included_fields_per_page}
-                    </span>
-                </div>
-
-            </div>
+            </g:if>
         </section>
         <section>
             <div class="row col-md-12">

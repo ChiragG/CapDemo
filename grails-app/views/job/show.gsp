@@ -52,21 +52,15 @@
             </div>
 
             <div class="row col-md-12">
-
-
-
                 <%
                     def myDailyActivitiesColumns = [['string', 'How out of School Hours Are Spent'], ['number',
                                                                                               'Hours per Day']]
-                    def myDailyActivitiesData = [['Work', 11], ['Eat', 2], ['Commute', 2], ['Watch TV', 2], ['Sleep', 7]]
                 %>
 
                 <gvisualization:pieCoreChart elementId="piechart" title="How out of School Hours Are Spent" width="${900}"
                                              height="${300}"
                                              columns="${myDailyActivitiesColumns}" data="${jobInstance.pieData}"/>
                 <div id="piechart" class="col-md-12 "></div>
-
-                <div id="barformat_div"></div>
             </div>
 
             <div class="row col-md-12">

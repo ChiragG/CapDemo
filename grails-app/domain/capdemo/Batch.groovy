@@ -9,6 +9,7 @@ class Batch {
     def grailsApplication
     String name
     int id
+    int jobId
     String status
     DateTime last_upload_date
     int file_count
@@ -26,6 +27,11 @@ class Batch {
             name = obj.getString('name')
             id =  obj.getInt('id')
             status = obj.getString('status')
+            if(obj.isNull('related_job_id')){
+                jobId = 0
+            }else{
+                jobId = obj.getInt('related_job_id')
+            }
             if(obj.isNull('last_upload_date')){
                 last_upload_date = null
             }else{
