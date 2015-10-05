@@ -95,7 +95,15 @@
                                                  columns="${myDailyActivitiesColumns}" data="${jobInstance.pieData}"/>
                     <div id="piechart" class="col-md-12 "></div>
 
+                    %{--<gvisualization:barCoreChart elementId="bar" title="School Bar Chart" hAxis="{--}%
+                                                 %{--title: 'Total Hours Spent',--}%
+                                                 %{--minValue: 0--}%
+                                                 %{--}"  vAxis="{--}%
+                                                 %{--title: 'Schools'--}%
+                                                 %{--}" chartArea="{width: '50%'}"--}%
+                                                 %{--data="${jobInstance.barData}"/>--}%
 
+                    <div id="bar" class="col-md-12 "></div>
                 </div>
 
                 <div class="row col-md-12">

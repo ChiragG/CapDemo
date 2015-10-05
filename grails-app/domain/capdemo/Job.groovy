@@ -18,6 +18,7 @@ class Job {
     List<LinkedHashMap<String,Object>> jobResults
     String resultsText
     List pieData
+    List barData
     static private  CaptricityClient client
 
     static constraints = {
@@ -79,6 +80,7 @@ class Job {
             map.each {key,value->
                 if(key.contains("Hours")){
                     if(mapOfVals.containsKey(key)){
+
                         mapOfVals[key] = mapOfVals[key]+ Double.parseDouble(value)
                     }else{
                         mapOfVals[key] =  Double.parseDouble(value)
@@ -91,6 +93,66 @@ class Job {
         def data =[]
         mapOfVals.each {data << [it.key.replace("_", " "),it.value]}
         pieData = data
+    }
+
+    def getBarData(){
+        barData = []
+        def schools = [:]
+        def tempdata = []
+
+        jobResults.each {map->
+            if(!schools[map.School]){
+//                schools[map.School] = map.School
+                tempdata = []
+                map.each{k,v->
+                    if(k.contains("Hours")){
+                        def tMap = [:]
+                        tMap[k] = Double.parseDouble(v)
+                        tempdata.add(tMap)
+                    }
+                }
+                schools[map.School] =tempdata
+            } else{
+                map.each{k,v->
+                    if(k.contains("Hours")){
+                        schools[map.School].each{arrayItem ->
+                            def val = arrayItem[k]
+                            if(val == null  ){
+                                val =0
+                            }
+                            def newVal = Double.parseDouble(v)
+                            if(newVal == null)
+                            {
+                                newVal = 0
+                            }
+                            arrayItem[k] = val + newVal
+                        }
+                    }
+                    }
+                }
+        }
+
+
+        def firstRow  =["Schools"]
+        def data =[]
+        tempdata.each{arrayItem ->
+            arrayItem.keySet().each{k ->
+                firstRow << k
+            }
+        }
+        data << firstRow
+
+        schools.each {k,v ->
+            def itemToAdd = []
+            itemToAdd << k
+            v.each{Map map->
+                    def val= map.values()
+                    itemToAdd << val[0].toString()
+                }
+            data << itemToAdd
+        }
+
+        barData = data
     }
 
     def CSVResults(){
