@@ -92,7 +92,7 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
-        grails.serverURL = "http://default-environment-4mx8ydppyy.elasticbeanstalk.com/"
+        grails.serverURL = "http://captricitydemo.elasticbeanstalk.com/"
     }
     capdemo {
         grails.logging.jul.usebridge = false
@@ -122,5 +122,6 @@ log4j.main = {
 }
 
 capdemo.api.token = '2405dec5f78d49488d2a465e18b22e0e'
+//capdemo.api.token = '98c1def3be7343318e2ce6421aee57e8'
 capdemo.allowedextensions = ['png','jpeg', 'jpg', 'tiff', 'pdf']
 capdemo.maxfilesize = '5242880'
