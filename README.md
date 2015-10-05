@@ -11,13 +11,13 @@ Sample Web App Using Captricity API : https://shreddr.captricity.com/developer/a
 2. Submit these batches of images via the Captricity API for processing.
 3. View the results of the processed images.
 
-## Run 
+## How To Run Application
 
 1. Download and install Grails: 2.5.1 https://grails.org/download.html
 2. Download and install Java 1.8 0_60 or higher
 3. Clone the project 
 4. cd CapDemo
-5  grails run-app
+5. grails run-app
 
 ## License
 
