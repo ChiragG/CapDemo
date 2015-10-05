@@ -41,8 +41,8 @@
 <div class="container theme-showcase" role="main">
     <div class="row col-md-12">
         <h1 class="page-header">
-            Batch Details: ${batchInstance.name} - Files <span class="badge">${batchInstance.file_count}</span> -
-            Status  ${batchInstance.status}</h1>
+            Batch Details: ${batchInstance.name}
+            <span class="pull-right">Status:  ${batchInstance.status.toUpperCase()}</span></h1>
         <section>
             <div class="row col-md-12">
                 <h3 class="Sub-header">Batch Actions</h3>
