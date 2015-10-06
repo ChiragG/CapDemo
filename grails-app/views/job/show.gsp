@@ -7,8 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="layout" content="main"/>
     <r:require modules="bootstrap"/>
-    <gvisualization:apiImport/>
+
     <title>Job Details</title>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+
 </head>
 
 <body role="document">

@@ -17,6 +17,14 @@
     <asset:stylesheet src="dropzone.css" />
     <asset:javascript src="dropzone.js" />
     <title>Batch Details</title>
+
+    <script type="text/javascript">
+
+        function toggleCheckBox(id){
+            document.getElementById(id).checked = !document.getElementById(id).checked;
+        }
+
+    </script>
 </head>
 
 <body>
@@ -58,7 +66,7 @@
                                     'btn btn-default btn-warning' :
                                     'btn btn-default btn-warning disabled'}"
                             controller="job"
-                            action="show">Show Job</g:link>
+                            action="show">Show Job Results</g:link>
                     <g:link id="${batchInstance.id}"
                             class="btn btn-default btn-primary"
                             controller="batch"
@@ -197,55 +205,56 @@
             </g:if>
         </section>
         <section>
-            <div class="row col-md-12">
-                <h3 class="Sub-header">Batch Files</h3>
-                <g:form action="deleteFiles" controller="batch" method="post">
-                    <g:if test="${batchInstance.files.size() > 0}">
+            <g:if  test="${batchInstance.status == 'setup'} ">
+                <div class="row col-md-12">
+                    <h3 class="Sub-header">Batch Files</h3>
+                    <g:form action="deleteFiles" controller="batch" method="post">
+                        <g:if test="${batchInstance.files.size() > 0}">
 
-                        <div class="col-md-6 ">
+                            <div class="col-md-6 ">
 
-                            <div class="list-group" id="list1">
-                                <input type="hidden" name="id" value="${batchInstance.id}"/>
-                                <g:each in="${batchInstance.files}" var="file">
-                                    <a href="#" class="list-group-item">${file.name}<input type="checkbox"
-                                                                                           class="pull-right"
-                                                                                           id="${file.id}"
-                                                                                           name="delete_files"
-                                                                                           value="${file.id}"></a>
-                                </g:each>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 ">
-                            <fieldset>
-                                <div class="row">
-                                    <g:submitButton name="deleteFile" class="btn btn-default btn-danger"
-                                                    id="deleteFileBtn"
-                                                    value="Delete File"/>
+                                <div class="list-group" id="list1">
+                                    <input type="hidden" name="id" value="${batchInstance.id}"/>
+                                    <g:each in="${batchInstance.files}" var="file">
+                                        <a  class="list-group-item"
+                                            onclick="toggleCheckBox(${file.id})">
+                                            ${file.name}
+                                            <input type="checkbox" class="pull-right" id="${file.id}" name="delete_files"
+                                                   value="${file.id}"></a>
+                                    </g:each>
                                 </div>
+                            </div>
 
-                            </fieldset>
-                        </div>
-                    </g:if>
-                </g:form>
-            </div>
+                            <div class="col-md-6 ">
+                                <fieldset>
+                                    <div class="row">
+                                        <g:submitButton name="deleteFile" class="btn btn-default btn-danger"
+                                                        id="deleteFileBtn"
+                                                        value="Delete File"/>
+                                    </div>
 
-            <div class="row col-md-12 ">
-                <g:form action="addBatchFile" controller="batch"
-                        enctype="multipart/form-data"
-                        autocomplete="off" class=" dropzone">
-                    <div class="dz-default dz-message"><span>Drop files here to upload</span></div>
-                    <input type="hidden" name="id" value="${batchInstance.id}"/>
-                    <input type="file" name="save_file" class="dz-hidden-input" multiple="multiple"
-                           style="visibility: hidden">
+                                </fieldset>
+                            </div>
+                        </g:if>
+                    </g:form>
+                </div>
+                <div class="row col-md-12">
+                    <g:form action="addBatchFile" controller="batch"
+                            enctype="multipart/form-data"
+                            autocomplete="off" class=" dropzone">
+                        <div class="dz-default dz-message"><span>Drop files here to upload</span></div>
+                        <input type="hidden" name="id" value="${batchInstance.id}"/>
+                        <input type="file" name="save_file" class="dz-hidden-input" multiple="multiple"
+                               style="visibility: hidden">
 
-                </g:form>
-            </div>
-            <div class="row col-md-12 ">
-                <g:link action="show" id="${batchInstance.id}" class="col-md-12 btn btn-default btn-primary"
-                >Refresh </g:link>
-            </div>
+                    </g:form>
+                </div>
+                <div class="row col-md-12">
+                    <g:link action="show" id="${batchInstance.id}" class="col-md-12 btn btn-default btn-primary"
+                    >Refresh </g:link>
+                </div>
 
+            </g:if>
         </section>
 
     </div>
